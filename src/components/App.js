@@ -1,26 +1,36 @@
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './../styles/App.css';
 
 const App = () => {
-  // Sample weather data
-  const weatherData = { temperature: 25, conditions: "Sunny" };
-  // Temperature threshold
-  const temperatureThreshold = 20;
+  const [weatherInput, setWeatherInput] = useState({ temperature: 25, conditions: "Sunny" });
+  const [textColor, setTextColor] = useState("blue");
 
-  // Determine the color based on the temperature
-  const temperatureColor = weatherData.temperature > temperatureThreshold ? 'red' : 'blue';
+  useEffect(() => {
+    // Set text color based on temperature threshold
+    if (weatherInput.temperature > 20) {
+      setTextColor("red");
+    } else {
+      setTextColor("blue");
+    }
+  }, [weatherInput.temperature]);
+
+  const weather = { temperature: 25, conditions: "Sunny" };
+  const temperatureColor = weather.temperature > 20 ? 'red' : 'blue';
 
   return (
     <div>
-      <h1>Weather App</h1>
-      <div style={{ color: temperatureColor }}>
-        {/* Display temperature with the "°C" suffix */}
-        <span>Temperature: {weatherData.temperature}</span>
-        <p>Conditions: {weatherData.conditions}</p>
+      {/* Do not remove the main div */}
+      <div style={{ color: textColor }}>
+        <p>Temperature: {weatherInput.temperature}</p>
+        <p>Conditions: {weatherInput.conditions}</p>
+      </div>
+      <div id="main">
+        <h2>Weather Report</h2>
+        <p>Temperature: <span style={{ color: temperatureColor }}>{weather.temperature}</span></p>
+        <p>Conditions: {weather.conditions}</p>
       </div>
     </div>
   );
-}
+};
 
 export default App;
